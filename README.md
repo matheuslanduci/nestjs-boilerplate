@@ -6,6 +6,14 @@
   A boilerplate for creating NestJS applications.
 </p>
 
+## Features
+
+- Relational databases with [Prisma ORM](https://www.prisma.io/)
+- Queues with [Bull](https://github.com/OptimalBits/bull)
+- Authentication with [JWT](https://jwt.io)
+- Mail sending with [Nodemailer](https://nodemailer.com)
+- Request validation with [Joi](https://github.com/sideway/joi)
+
 ## Prerequisites
 
 - A package manager (e.g. npm, yarn, pnpm)
