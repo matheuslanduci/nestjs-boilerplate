@@ -1,4 +1,4 @@
-<img alt="NestJS Boilerplate" src="https://i.imgur.com/jVD4LvX.png">
+<img alt="NestJS Boilerplate" src="https://i.imgur.com/bCuyigf.png" align="center">
 <h2 align="center">
   NestJS Boilerplate
 </h2>
@@ -8,11 +8,12 @@
 
 ## Features
 
-- Relational databases with [Prisma ORM](https://www.prisma.io/)
+- Databases with [Prisma ORM](https://www.prisma.io/)
 - Queues with [Bull](https://github.com/OptimalBits/bull)
 - Authentication with [JWT](https://jwt.io)
 - Mail sending with [Nodemailer](https://nodemailer.com)
 - Request validation with [Joi](https://github.com/sideway/joi)
+- Event emitting with [Nest Event Emitter](https://docs.nestjs.com/techniques/events)
 
 ## Prerequisites
 
