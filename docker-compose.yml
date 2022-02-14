@@ -1,0 +1,26 @@
+# Postgres and Redis setup.
+
+version: '3.7'
+
+services:
+  database:
+    image: postgres:13
+    container_name: app_database
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=app
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    restart: always
+  redis:
+    image: redis:6
+    container_name: app_redis
+    command: redis-server --requirepass root
+    volumes:
+      - ./data/redis:/data
+    ports:
+      - "6379:6379"
+    restart: always
