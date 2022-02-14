@@ -1,4 +1,4 @@
-<img alt="NestJS Boilerplate" src="https://i.imgur.com/bCuyigf.png" align="center">
+<img alt="NestJS Boilerplate" src="https://i.imgur.com/bCuyigf.png" width="100%">
 <h2 align="center">
   NestJS Boilerplate
 </h2>
@@ -42,7 +42,6 @@
 - Setup the database
 
 ```bash
-  $ cd nestjs-boilerplate
   $ npm run db:setup
 ```
 
