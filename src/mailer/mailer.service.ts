@@ -5,7 +5,6 @@ import { JobOptions, Queue } from 'bull'
 import { createTransport, Transporter } from 'nodemailer'
 import { readFile } from 'fs/promises'
 import * as hbs from 'handlebars'
-import * as path from 'path'
 
 import { MailOptions } from './interfaces/mail-options.interface'
 
@@ -21,10 +20,14 @@ export class MailerService {
     const mailPort = this.configService.get<number>('MAIL_PORT')
     const mailUser = this.configService.get<string>('MAIL_USER')
     const mailPass = this.configService.get<string>('MAIL_PASS')
-    const mailFrom = this.configService.get<string>('MAIL_FROM')
+    const mailFromAddress = this.configService.get<string>('MAIL_FROM_ADDRESS')
+    const mailFromName = this.configService.get<string>('MAIL_FROM_NAME')
 
     this.transporter = createTransport({
-      from: mailFrom,
+      from: {
+        address: mailFromAddress,
+        name: mailFromName
+      },
       host: mailHost,
       port: mailPort,
       auth: {
@@ -69,7 +72,7 @@ export class MailerService {
     const { to, context, subject, view } = options
 
     const html = await this.generateHtml(
-      path.join(__dirname, '/views/', `${view}.hbs`),
+      `src/mailer/views/${view}.hbs`,
       context
     )
 
@@ -88,9 +91,15 @@ export class MailerService {
    * @returns The template rendered
    */
   private async generateHtml(view: string, context: any): Promise<string> {
-    const file = await readFile(view, 'utf8')
+    let file: Buffer
 
-    const template = hbs.compile(file)
+    try {
+      file = await readFile(view)
+    } catch (error) {
+      throw new Error(`The view ${view} does not exist`)
+    }
+
+    const template = hbs.compile(file.toString('utf-8'))
 
     return template(context)
   }

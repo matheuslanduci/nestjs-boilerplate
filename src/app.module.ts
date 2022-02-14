@@ -1,6 +1,7 @@
 import { BullModule } from '@nestjs/bull'
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
+import { EventEmitterModule } from '@nestjs/event-emitter'
 
 import { PrismaModule } from './prisma/prisma.module'
 import { MailerModule } from './mailer/mailer.module'
@@ -17,6 +18,7 @@ import { UsersModule } from './users/users.module'
         password: process.env.REDIS_PASS
       }
     }),
+    EventEmitterModule.forRoot(),
     PrismaModule,
     MailerModule,
     AuthModule,

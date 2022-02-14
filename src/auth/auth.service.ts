@@ -4,6 +4,7 @@ import {
   UnprocessableEntityException
 } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import { EventEmitter2 } from '@nestjs/event-emitter'
 import { User } from '@prisma/client'
 import * as bcrypt from 'bcryptjs'
 import * as jwt from 'jsonwebtoken'
@@ -12,6 +13,7 @@ import { UsersService } from '../users/users.service'
 
 import { LoginDto } from './dto/login.dto'
 import { RegisterDto } from './dto/register.dto'
+import { UserCreatedEvent } from './events/user-created.event'
 import { JwtPayload } from './interfaces/jwt-payload.interface'
 import { UserTokens } from './interfaces/user-tokens.interface'
 
@@ -21,7 +23,8 @@ export class AuthService {
 
   constructor(
     private readonly configService: ConfigService,
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
+    private readonly eventEmitter: EventEmitter2
   ) {
     this.secret = this.configService.get<string>('JWT_SECRET')
   }
@@ -88,6 +91,8 @@ export class AuthService {
         password: await bcrypt.hash(data.password, 10)
       }
     })
+
+    this.eventEmitter.emit('user.created', new UserCreatedEvent(user.email))
 
     return user
   }
